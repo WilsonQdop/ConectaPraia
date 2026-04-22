@@ -1,5 +1,6 @@
 package br.com.uninassau.LEI.ConectaPraia.domain;
 
+import br.com.uninassau.LEI.ConectaPraia.domain.enums.Role;
 import jakarta.persistence.*;
 
 import java.util.UUID;
@@ -16,6 +17,17 @@ public abstract class User {
     private String email;
     private String cpf;
     private String phone;
+
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
 
     public UUID getId() {
         return id;
