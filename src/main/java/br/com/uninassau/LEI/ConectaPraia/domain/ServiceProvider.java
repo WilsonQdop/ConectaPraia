@@ -14,7 +14,7 @@ public abstract class ServiceProvider {
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
-    @ManyToOne @JoinColumn(name = "serviceProvider")
+    @ManyToOne @JoinColumn(name = "entrepreneur_id")
     private Entrepreneur entrepreneur;
 
     private String name;
@@ -29,7 +29,7 @@ public abstract class ServiceProvider {
     private TypeStatus status;
 
     @OneToMany(mappedBy = "serviceProvider", cascade = CascadeType.ALL)
-    private List<Post> posts;
+    private List<PostsService> postsServices;
 
     public UUID getId() {
         return id;
@@ -103,11 +103,11 @@ public abstract class ServiceProvider {
         this.status = status;
     }
 
-    public List<Post> getPosts() {
-        return posts;
+    public List<PostsService> getPosts() {
+        return postsServices;
     }
 
-    public void setPosts(List<Post> posts) {
-        this.posts = posts;
+    public void setPosts(List<PostsService> postsServices) {
+        this.postsServices = postsServices;
     }
 }

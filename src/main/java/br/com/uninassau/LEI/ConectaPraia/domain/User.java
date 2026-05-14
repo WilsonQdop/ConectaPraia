@@ -17,6 +17,15 @@ public abstract class User {
     private String email;
     private String cpf;
     private String phone;
+    private String ProfilePictureUrl;
+
+    public String getProfilePictureUrl() {
+        return ProfilePictureUrl;
+    }
+
+    public void setProfilePictureUrl(String profilePictureUrl) {
+        ProfilePictureUrl = profilePictureUrl;
+    }
 
     @Enumerated(EnumType.STRING)
     private Role role;

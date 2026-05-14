@@ -1,14 +1,14 @@
 package br.com.uninassau.LEI.ConectaPraia.domain;
 
+import br.com.uninassau.LEI.ConectaPraia.domain.enums.TypeService;
 import jakarta.persistence.*;
-import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
-public class Post {
+public class PostsService {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -18,11 +18,19 @@ public class Post {
     @JoinColumn(name = "serviceProvider_id")
     private ServiceProvider serviceProvider;
 
+    @ManyToOne @JoinColumn(name = "entrepreneur_id")
+    private Entrepreneur entrepreneur;
+
+    @Enumerated(EnumType.STRING)
+    private TypeService ServiceType;
+
     private String title;
     private String location;
     private LocalDateTime dateHour;
     private BigDecimal value;
     private String valueDescription;   // "+ prancha", "aula + prancha"
+    private String imageUrl;
+    private LocalDateTime createdAt;
 
     @Column(columnDefinition = "TEXT")
     private String description;
@@ -89,5 +97,37 @@ public class Post {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public TypeService getServiceType() {
+        return ServiceType;
+    }
+
+    public void setServiceType(TypeService serviceType) {
+        ServiceType = serviceType;
+    }
+
+    public Entrepreneur getEntrepreneur() {
+        return entrepreneur;
+    }
+
+    public void setEntrepreneur(Entrepreneur entrepreneur) {
+        this.entrepreneur = entrepreneur;
     }
 }

@@ -4,7 +4,7 @@ import br.com.uninassau.LEI.ConectaPraia.dto.LoginResponseDTO;
 import br.com.uninassau.LEI.ConectaPraia.dto.RegisterResponseDTO;
 import br.com.uninassau.LEI.ConectaPraia.dto.request.LoginRequestDTO;
 import br.com.uninassau.LEI.ConectaPraia.dto.request.RegisterRequestDTO;
-import br.com.uninassau.LEI.ConectaPraia.service.AuthService;
+import br.com.uninassau.LEI.ConectaPraia.service.auth.AuthService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

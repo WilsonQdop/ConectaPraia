@@ -1,4 +1,4 @@
-package br.com.uninassau.LEI.ConectaPraia;
+package br.com.uninassau.LEI.ConectaPraia.exceptions;
 
 public class EmailAlreadyInUseException extends RuntimeException {
 

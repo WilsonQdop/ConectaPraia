@@ -15,7 +15,7 @@ public class ReviewService {
 
     @ManyToOne
     @JoinColumn(name = "post_id")
-    private Post post;
+    private PostsService postsService;
 
     @ManyToOne
     @JoinColumn(name = "tourist_id")
@@ -33,12 +33,12 @@ public class ReviewService {
         this.id = id;
     }
 
-    public Post getPost() {
-        return post;
+    public PostsService getPost() {
+        return postsService;
     }
 
-    public void setPost(Post post) {
-        this.post = post;
+    public void setPost(PostsService postsService) {
+        this.postsService = postsService;
     }
 
     public Tourist getTourist() {

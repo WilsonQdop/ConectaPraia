@@ -1,4 +1,4 @@
-package br.com.uninassau.LEI.ConectaPraia;
+package br.com.uninassau.LEI.ConectaPraia.service.auth;
 
 import br.com.uninassau.LEI.ConectaPraia.domain.User;
 import com.auth0.jwt.JWT;
@@ -19,18 +19,17 @@ public class TokenService {
     private String keySecret;
 
     public String generateToken(User user) {
-        try{
+        try {
             Algorithm algorithm = Algorithm.HMAC256(keySecret);
 
-            String token = JWT.create()
-                    .withIssuer("AgendamentoTecnico")
+            return JWT.create()
+                    .withIssuer("ConectaPraia")
                     .withSubject(user.getEmail())
                     .withExpiresAt(this.GenerateExpirationDate())
                     .sign(algorithm);
-            return token;
 
         } catch (JWTCreationException j) {
-            throw new RuntimeException(j); // Mudar para uma exceção personalizada
+            throw new RuntimeException(j);
         }
     }
 

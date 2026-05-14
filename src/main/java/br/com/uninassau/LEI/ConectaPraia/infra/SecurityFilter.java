@@ -1,6 +1,6 @@
 package br.com.uninassau.LEI.ConectaPraia.infra;
 
-import br.com.uninassau.LEI.ConectaPraia.TokenService;
+import br.com.uninassau.LEI.ConectaPraia.service.auth.TokenService;
 import br.com.uninassau.LEI.ConectaPraia.domain.User;
 import br.com.uninassau.LEI.ConectaPraia.repositories.UserRepository;
 import jakarta.servlet.FilterChain;
@@ -32,26 +32,31 @@ public class SecurityFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
                                     FilterChain filterChain) throws ServletException, IOException {
+        try {
+            String token = this.recoverToken(request);
 
-        String token = this.recoverToken(request);
-        String login = tokenService.validateToken(token);
+            if (token != null) {
+                String email = tokenService.validateToken(token);
 
-        if(login != null) {
-            User user = userRepository.findByEmail(login).orElseThrow(() ->
-                    new UsernameNotFoundException("Usuário não encontrado"));
-            List<SimpleGrantedAuthority> authorities = Collections.singletonList
-                    (new SimpleGrantedAuthority("ROLE_" + user.getRole().name()));
-            UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken
-                    (
-                            user,
-                            null,
-                            authorities
+                if (email != null) {
+                    User user = userRepository.findByEmail(email)
+                            .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado"));
+
+                    List<SimpleGrantedAuthority> authorities = Collections.singletonList(
+                            new SimpleGrantedAuthority("ROLE_" + user.getRole().name())
                     );
-            SecurityContextHolder.getContext().setAuthentication(authentication); // Contexto de segurança
+                    UsernamePasswordAuthenticationToken authentication =
+                            new UsernamePasswordAuthenticationToken(user, null, authorities);
 
+                    SecurityContextHolder.getContext().setAuthentication(authentication);
+                }
+            }
+
+            filterChain.doFilter(request, response);
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
-        filterChain.doFilter(request, response);
-
     }
 
     private String recoverToken(HttpServletRequest request) {

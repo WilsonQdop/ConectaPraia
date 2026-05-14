@@ -17,7 +17,7 @@ public class Registered {
 
     @ManyToOne
     @JoinColumn(name = "post_id")
-    private Post post;
+    private PostsService postsService;
 
     private LocalDateTime registeredAt;
 
@@ -37,12 +37,12 @@ public class Registered {
         this.tourist = tourist;
     }
 
-    public Post getPost() {
-        return post;
+    public PostsService getPost() {
+        return postsService;
     }
 
-    public void setPost(Post post) {
-        this.post = post;
+    public void setPost(PostsService postsService) {
+        this.postsService = postsService;
     }
 
     public LocalDateTime getRegisteredAt() {
