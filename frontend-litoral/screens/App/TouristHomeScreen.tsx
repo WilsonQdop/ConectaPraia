@@ -7,6 +7,7 @@ import {
   StyleSheet,
   TextInput,
   Dimensions,
+  Image,
 } from 'react-native';
 import { Feather } from '@expo/vector-icons';
 import { useApp } from '../../context/AppContext';
@@ -18,9 +19,18 @@ interface TouristHomeScreenProps {
   navigation: any;
 }
 
+type NavTab = 'home' | 'search' | 'reservations' | 'explore';
+
 export const TouristHomeScreen: React.FC<TouristHomeScreenProps> = ({ navigation }) => {
-  const { showToast } = useApp();
+  const { showToast, user } = useApp();
   const [searchQuery, setSearchQuery] = useState('');
+  const [activeTab, setActiveTab] = useState<NavTab>('home');
+
+  const handleNavPress = (tab: NavTab) => {
+    setActiveTab(tab);
+    if (tab === 'reservations') navigation.navigate('TouristReservations');
+    if (tab === 'explore') navigation.navigate('TouristExplore');
+  };
 
   return (
     <View style={styles.container}>
@@ -29,6 +39,7 @@ export const TouristHomeScreen: React.FC<TouristHomeScreenProps> = ({ navigation
         style={styles.mapBackground}
         imageStyle={{ resizeMode: 'cover' }}
       >
+        {/* Header */}
         <View style={styles.header}>
           <View style={styles.searchBar}>
             <Feather name="search" size={16} color="#78716c" />
@@ -40,14 +51,25 @@ export const TouristHomeScreen: React.FC<TouristHomeScreenProps> = ({ navigation
               onChangeText={setSearchQuery}
             />
           </View>
+
+          {/* Avatar / botão de perfil */}
           <TouchableOpacity
-            style={styles.filterButton}
-            onPress={() => navigation.navigate('TouristExplore')}
+            style={styles.avatarButton}
+            onPress={() => navigation.navigate('Profile')}
           >
-            <Feather name="sliders" size={18} color="#1c1917" />
+            {user?.avatar ? (
+              <Image source={{ uri: user.avatar }} style={styles.avatarImage} />
+            ) : (
+              <View style={styles.avatarPlaceholder}>
+                <Text style={styles.avatarInitial}>
+                  {user?.name ? user.name.charAt(0).toUpperCase() : 'U'}
+                </Text>
+              </View>
+            )}
           </TouchableOpacity>
         </View>
 
+        {/* Pins no mapa */}
         <View style={styles.pinsContainer}>
           <TouchableOpacity
             style={[styles.pin, { top: '20%', left: '55%' }]}
@@ -89,33 +111,32 @@ export const TouristHomeScreen: React.FC<TouristHomeScreenProps> = ({ navigation
           </TouchableOpacity>
         </View>
 
-        <View style={styles.bottomDrawer}>
-          <View style={styles.drawerHandle} />
-          <View style={styles.locationInfo}>
-            <Feather name="map-pin" size={20} color="#10b981" />
-            <View>
-              <Text style={styles.locationTitle}>Porto de Galinhas</Text>
-              <Text style={styles.locationSubtitle}>Clique nos alfinetes no mapa para ver!</Text>
-            </View>
-          </View>
+        {/* Barra de navegação inferior */}
+        <View style={styles.bottomNav}>
 
-          <View style={styles.quickCards}>
-            <TouchableOpacity
-              style={styles.quickCard}
-              onPress={() => navigation.navigate('EventDetail', { eventId: 'e1' })}
-            >
-              <Text style={styles.quickCardTitle}>🏄 Aula de Surf</Text>
-              <Text style={styles.quickCardPrice}>R$ 80 + prancha</Text>
-            </TouchableOpacity>
+          {/* Reservas */}
+          <TouchableOpacity
+            style={styles.navItem}
+            onPress={() => handleNavPress('reservations')}
+          >
+            <Feather
+              name="calendar"
+              size={22}
+              color={activeTab === 'reservations' ? '#10b981' : '#78716c'}
+            />
+          </TouchableOpacity>
 
-            <TouchableOpacity
-              style={styles.quickCard}
-              onPress={() => navigation.navigate('ServiceDetail', { serviceId: 's1' })}
-            >
-              <Text style={styles.quickCardTitle}>🐟 Peixada do Nê</Text>
-              <Text style={styles.quickCardPrice}>Barraca Céu Azul</Text>
-            </TouchableOpacity>
-          </View>
+          {/* Explorar */}
+          <TouchableOpacity
+            style={styles.navItem}
+            onPress={() => handleNavPress('explore')}
+          >
+            <Feather
+              name="grid"
+              size={22}
+              color={activeTab === 'explore' ? '#10b981' : '#78716c'}
+            />
+          </TouchableOpacity>
         </View>
       </ImageBackground>
     </View>
@@ -131,12 +152,15 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
   },
+
+  // ── Header ──────────────────────────────────────────────────
   header: {
     position: 'absolute',
     top: 50,
     left: 16,
     right: 16,
     flexDirection: 'row',
+    alignItems: 'center',
     gap: 12,
     zIndex: 20,
   },
@@ -156,14 +180,32 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: '#1c1917',
   },
-  filterButton: {
+  avatarButton: {
     width: 44,
     height: 44,
+    borderRadius: 22,
+    overflow: 'hidden',
+    borderWidth: 2,
+    borderColor: '#fff',
+  },
+  avatarImage: {
+    width: '100%',
+    height: '100%',
+  },
+  avatarPlaceholder: {
+    width: '100%',
+    height: '100%',
     backgroundColor: '#80d6d1',
-    borderRadius: 50,
     alignItems: 'center',
     justifyContent: 'center',
   },
+  avatarInitial: {
+    fontSize: 18,
+    fontWeight: '700',
+    color: '#fff',
+  },
+
+  // ── Pins ────────────────────────────────────────────────────
   pinsContainer: {
     position: 'absolute',
     top: 0,
@@ -194,9 +236,11 @@ const styles = StyleSheet.create({
     borderWidth: 3,
     borderColor: '#fff',
   },
+
+  // ── Bottom Drawer ────────────────────────────────────────────
   bottomDrawer: {
     position: 'absolute',
-    bottom: 80,
+    bottom: 96,
     left: 16,
     right: 16,
     backgroundColor: 'rgba(255,255,255,0.95)',
@@ -245,5 +289,37 @@ const styles = StyleSheet.create({
     color: '#4ea19b',
     fontWeight: '700',
     marginTop: 4,
+  },
+
+  // ── Bottom Nav ───────────────────────────────────────────────
+  bottomNav: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    height: 72,
+    backgroundColor: 'rgba(255,255,255,0.97)',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-around',
+    paddingBottom: 8,
+    borderTopWidth: 1,
+    borderTopColor: 'rgba(0,0,0,0.06)',
+  },
+  navItem: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: '100%',
+  },
+  navIconWrapper: {
+    width: 44,
+    height: 44,
+    borderRadius: 22,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  navIconActive: {
+    backgroundColor: '#10b981',
   },
 });

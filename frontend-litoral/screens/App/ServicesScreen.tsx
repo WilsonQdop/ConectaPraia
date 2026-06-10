@@ -384,8 +384,8 @@ const styles = StyleSheet.create({
   } as TextStyle,
   listContent: {
     paddingHorizontal: Spacing.md,
-    paddingBottom: Spacing.xl,
-    flexGrow: 1,
+    paddingBottom: Spacing.sm,
+    flexGrow: 0,
   } as ViewStyle,
   loadingContainer: {
     flex: 1,

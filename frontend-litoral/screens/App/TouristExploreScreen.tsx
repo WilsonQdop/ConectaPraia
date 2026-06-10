@@ -321,7 +321,7 @@ const styles = StyleSheet.create({
     color: '#1c1917',
   },
   listContent: {
-    paddingBottom: 20,
+    paddingBottom: 2000,
   },
   card: {
     flexDirection: 'row',

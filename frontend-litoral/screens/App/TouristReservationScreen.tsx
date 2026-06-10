@@ -182,7 +182,7 @@ const styles = StyleSheet.create({
     color: '#fff',
   },
   bookingsList: {
-    paddingBottom: 20,
+    paddingBottom: 2000,
   },
   emptyContainer: {
     alignItems: 'center',

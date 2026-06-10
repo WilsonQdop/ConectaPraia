@@ -361,11 +361,13 @@ const styles = StyleSheet.create({
   } as TextStyle,
   categoriesList: {
     maxHeight: 46,
+    flexGrow: 0,
     marginBottom: Spacing.md,
   },
   categoriesContainer: {
     paddingHorizontal: Spacing.md,
     gap: 8,
+    alignItems: 'center',
   } as ViewStyle,
   categoryChip: {
     paddingHorizontal: Spacing.md,
@@ -374,6 +376,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.background,
     borderWidth: 1,
     borderColor: Colors.border,
+    alignSelf: 'flex-start',
   } as ViewStyle,
   categoryChipActive: {
     backgroundColor: Colors.primary,
