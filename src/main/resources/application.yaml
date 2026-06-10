@@ -1,4 +1,8 @@
 #Futuramente para Deploy, aprender um jeito que guarda essas informações sem prejudicar a segurança
+server:
+  address: 0.0.0.0
+  port: 8080
+
 spring:
   application:
     name: ConectaPraia

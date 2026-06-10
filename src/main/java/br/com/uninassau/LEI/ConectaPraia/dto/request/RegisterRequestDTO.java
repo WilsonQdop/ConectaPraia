@@ -2,7 +2,6 @@ package br.com.uninassau.LEI.ConectaPraia.dto.request;
 
 import br.com.uninassau.LEI.ConectaPraia.domain.enums.Role;
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 

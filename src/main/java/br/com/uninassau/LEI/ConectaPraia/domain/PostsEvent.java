@@ -1,7 +1,6 @@
 package br.com.uninassau.LEI.ConectaPraia.domain;
 
 import br.com.uninassau.LEI.ConectaPraia.domain.enums.TypeEvent;
-import br.com.uninassau.LEI.ConectaPraia.domain.enums.TypeService;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;

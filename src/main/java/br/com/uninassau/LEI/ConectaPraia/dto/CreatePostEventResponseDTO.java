@@ -1,7 +1,6 @@
 package br.com.uninassau.LEI.ConectaPraia.dto;
 
 import br.com.uninassau.LEI.ConectaPraia.domain.enums.TypeEvent;
-import br.com.uninassau.LEI.ConectaPraia.domain.enums.TypeService;
 import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;

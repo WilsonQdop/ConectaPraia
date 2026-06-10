@@ -1,11 +1,9 @@
 package br.com.uninassau.LEI.ConectaPraia.dto.request;
 
 import br.com.uninassau.LEI.ConectaPraia.domain.enums.TypeService;
-import jakarta.persistence.Column;
 import jakarta.validation.constraints.*;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 
 public record CreatePostServiceRequestDTO(
         @NotBlank

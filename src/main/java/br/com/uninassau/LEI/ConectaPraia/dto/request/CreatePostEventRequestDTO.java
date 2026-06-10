@@ -1,7 +1,6 @@
 package br.com.uninassau.LEI.ConectaPraia.dto.request;
 
 import br.com.uninassau.LEI.ConectaPraia.domain.enums.TypeEvent;
-import br.com.uninassau.LEI.ConectaPraia.domain.enums.TypeService;
 import jakarta.validation.constraints.DecimalMin;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
